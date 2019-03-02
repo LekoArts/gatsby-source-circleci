@@ -1,0 +1,34 @@
+{
+  "name": "gatsby-source-circleci",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:LekoArts/gatsby-source-circleci.git",
+  "author": "LekoArts <lekoarts@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "circleci",
+    "circle-ci",
+    "gatsby-plugin",
+    "gatsby-source"
+  ],
+  "peerDependencies": {
+    "gatsby": ">=2.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "tsc",
+    "watch": "tsc --watch",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "dependencies": {
+    "circleci-api": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^11.10.4",
+    "prettier": "^1.16.4",
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.3.3333"
+  }
+}
