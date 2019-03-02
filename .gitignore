@@ -24,4 +24,4 @@ node_modules
 .idea
 !index.js
 /*.d.ts
-types
+/types
