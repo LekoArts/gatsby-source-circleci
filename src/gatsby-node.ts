@@ -1,18 +1,18 @@
+/// <reference path="../node_modules/gatsby/index.d.ts" />
 import { CircleCI, CircleCIOptions } from 'circleci-api'
-import { GatsbyContext } from './types/gatsby'
 
 interface PluginOptions {
   apiKey: string
 }
 
 export const sourceNodes = async (
-  { actions, createNodeId, createContentDigest }: GatsbyContext,
+  { actions, createNodeId, createContentDigest, reporter },
   pluginOptions: PluginOptions
 ) => {
   const { createNode } = actions
 
   if (!pluginOptions.apiKey) {
-    throw new Error('Please define an access token')
+    reporter.panicOnBuild('Please define a CircleCI access token')
   }
 
   const options: CircleCIOptions = {
