@@ -1,12 +1,12 @@
-/// <reference path="../node_modules/gatsby/index.d.ts" />
 import { CircleCI, CircleCIOptions } from 'circleci-api'
+import { SourceNodesArgs } from 'gatsby'
 
 interface PluginOptions {
   apiKey: string
 }
 
 export const sourceNodes = async (
-  { actions, createNodeId, createContentDigest, reporter },
+  { actions, createNodeId, createContentDigest, reporter }: SourceNodesArgs,
   pluginOptions: PluginOptions
 ) => {
   const { createNode } = actions
