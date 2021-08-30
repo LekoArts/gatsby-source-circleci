@@ -12,7 +12,8 @@
     "declaration": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
   },
   "files": ["node_modules/gatsby/index.d.ts"]
 }

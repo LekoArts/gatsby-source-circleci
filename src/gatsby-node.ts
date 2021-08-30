@@ -1,25 +1,29 @@
-import { CircleCI, CircleCIOptions } from 'circleci-api'
-import { SourceNodesArgs } from 'gatsby'
+import { CircleCI, CircleCIOptions } from "circleci-api";
+import { SourceNodesArgs, GatsbyNode } from "gatsby";
 
 interface PluginOptions {
-  apiKey: string
+  apiKey: string;
 }
+
+export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
+  Joi,
+}) => {
+  return Joi.object({
+    apiKey: Joi.string().required().description("Your CircleCI access token"),
+  });
+};
 
 export const sourceNodes = async (
   { actions, createNodeId, createContentDigest, reporter }: SourceNodesArgs,
   pluginOptions: PluginOptions
 ) => {
-  const { createNode } = actions
-
-  if (!pluginOptions.apiKey) {
-    reporter.panicOnBuild('Please define a CircleCI access token')
-  }
+  const { createNode } = actions;
 
   const options: CircleCIOptions = {
     token: pluginOptions.apiKey,
-  }
+  };
 
-  const api = new CircleCI(options)
+  const api = new CircleCI(options);
 
   const nodeHelper = (input: any, name: string) => {
     const node = {
@@ -30,22 +34,24 @@ export const sourceNodes = async (
       internal: {
         type: `CircleCI${name}`,
       },
-    }
+    };
 
-    node.internal.content = JSON.stringify(node)
-    node.internal.contentDigest = createContentDigest(node)
+    node.internal.content = JSON.stringify(node);
+    node.internal.contentDigest = createContentDigest(node);
 
-    createNode(node)
-  }
+    createNode(node);
+  };
 
   try {
-    const me = await api.me()
-    const projects = await api.projects()
+    const me = await api.me();
+    const projects = await api.projects();
 
-    nodeHelper(me, 'Me')
-    projects.forEach(project => nodeHelper(project, 'Projects'))
-  } catch (e) {
-    console.error(e)
-    process.exit(1)
+    nodeHelper(me, "Me");
+    projects.forEach((project) => nodeHelper(project, "Projects"));
+  } catch (e: any) {
+    reporter.panicOnBuild(
+      "Error creating nodes from gatsby-source-circleci",
+      e
+    );
   }
-}
+};
